@@ -691,7 +691,9 @@ _kgsl_sharedmem_page_alloc(struct kgsl_memdesc *memdesc,
 			 */
 			memdesc->sglen = sglen;
 			memdesc->size = (size - len);
-			sg_mark_end(&memdesc->sg[sglen - 1]);
+
+			if (sglen > 0)
+				sg_mark_end(&memdesc->sg[sglen - 1]);
 
 			if (sglen > 0)
 				sg_mark_end(&memdesc->sg[sglen - 1]);
