@@ -406,12 +406,13 @@ static int tz_suspend(struct devfreq *devfreq)
 	unsigned int scm_data[2] = {0, 0};
 	suspended = true;
 
+	__secure_tz_entry2(TZ_RESET_ID, 0, 0);
+
 	priv->bin.total_time = 0;
 	priv->bin.busy_time = 0;
 
-	freq = profile->freq_table[profile->max_state - 1];
 
-	return profile->target(devfreq->dev.parent, &freq, 0);
+	return 0;
 
 }
 
