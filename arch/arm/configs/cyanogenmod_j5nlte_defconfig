@@ -3264,6 +3264,7 @@ CONFIG_ION_MSM=y
 # CONFIG_CED1401 is not set
 # CONFIG_DGRP is not set
 CONFIG_VNSWAP=y
+CONFIG_QUICK_WAKEUP=y
 
 #
 # Qualcomm Atheros Prima WLAN module
