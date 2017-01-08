@@ -257,8 +257,7 @@ static int tz_get_target_freq(struct devfreq *devfreq, unsigned long *freq,
 	 * If there is an extended block of busy processing,
 	 * increase frequency.  Otherwise run the normal algorithm.
 	 */
-	if (priv->bin.busy_time > CEILING ||
-		(busy_bin > CEILING && frame_flag)) {
+	if (priv->bin.busy_time > CEILING || (busy_bin > CEILING && frame_flag)) {
 		val = -1 * level;
 		busy_bin = 0;
 		frame_flag = 0;
@@ -404,9 +403,9 @@ static int tz_suspend(struct devfreq *devfreq)
 {
 	struct devfreq_msm_adreno_tz_data *priv = devfreq->data;
 	unsigned int scm_data[2] = {0, 0};
+	__secure_tz_reset_entry2(scm_data, sizeof(scm_data), priv->is_64);
 	suspended = true;
 
-	__secure_tz_entry2(TZ_RESET_ID, 0, 0);
 
 	priv->bin.total_time = 0;
 	priv->bin.busy_time = 0;
@@ -507,13 +506,14 @@ static struct devfreq_governor msm_adreno_tz = {
 
 static void tz_early_suspend(struct power_suspend *handler)
 {
-	power_suspended = true;
+	suspended = true;
 	return;
-}
+};
 static void tz_late_resume(struct power_suspend *handler)
-	power_suspended = false;
+{
+	suspended = false;
 	return;
-}
+};
 
 static struct power_suspend tz_power_suspend = {
 	.suspend = tz_early_suspend,
