@@ -1528,9 +1528,7 @@ static int sm5703_charger_parse_dt(struct device *dev,
 
 	for(i = 0; i < len; i++) {
 		pdata->charging_current_table[i].input_current_limit = 1200;
-		ret = sec_bat_read_u32_index_dt(np,
-				 "battery,fast_charging_current", i,
-				 &pdata->charging_current_table[i].fast_charging_current);
+		pdata->charging_current_table[i].fast_charging_current = 1200;
 		ret = sec_bat_read_u32_index_dt(np,
 				 "battery,full_check_current_1st", i,
 				 &pdata->charging_current_table[i].full_check_current_1st);
